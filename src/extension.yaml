@@ -1,0 +1,125 @@
+name: com.dynatrace.extension.snmp-traps-generic
+version: <1.2.2>
+# Set proper version before the release:
+minDynatraceVersion: "1.254"
+minEECVersion: "1.251"
+author:
+  name: Dynatrace
+
+metrics:
+  - key: com.dynatrace.extension.snmp-traps-generic.traps.count
+    metadata:
+      displayName: Traps count
+      description: Number of traps received.
+      unit: Count
+
+snmptraps:
+  - group: generic
+
+    interval:
+      minutes: 1
+
+    featureSet: Events
+
+    dimensions:
+      - key: host_ip
+        value: const:sender
+      - key: trap_oid
+        value: const:trapOID
+
+    metrics:
+      - key: com.dynatrace.extension.snmp-traps-generic.traps.count
+        type: count,delta
+        value: calculated
+
+
+dashboards:
+  - path: "dashboards/dashboard.json"
+
+topology:
+  types:
+    - name: snmptraps:com_dynatrace_ext_snmp-traps
+      displayName: SNMP Traps Device
+      enabled: true
+      rules:
+        - idPattern: snmp_traps_device_{device.address}
+          sources:
+            - sourceType: Metrics
+              condition: $prefix(com.dynatrace.extension.snmp-traps-generic.traps.count)
+          attributes:
+            - pattern: '{device.name}'
+              key: deviceName
+              displayName: Device Name
+            - pattern: '{device.address}'
+              key: dt.ip_addresses
+              displayName: Device Address
+          requiredDimensions: []
+          instanceNamePattern: SNMP Traps source {device.name}
+        - idPattern: snmp_traps_device_{device.address}
+          sources:
+              - sourceType: Logs
+          attributes: 
+            - pattern: '{device.address}'
+              key: dt.ip_addresses
+              displayName: Device Address
+          requiredDimensions: 
+            - key: log.source
+              valuePattern: '$eq(snmptraps)'
+
+screens:
+  - chartsCards:
+      - charts:
+          - conditions: []
+            displayName: Traps Count
+            graphChartConfig:
+              metrics:
+                - metricSelector: com.dynatrace.extension.snmp-traps-generic.traps.count:splitBy()
+                  visualization:
+                    displayName: Traps count
+                    seriesType: COLUMN
+              yAxes: []
+            visualizationType: GRAPH_CHART
+          - conditions: []
+            displayName: Trap OIDs
+            graphChartConfig:
+              metrics:
+                - metricSelector: com.dynatrace.extension.snmp-traps-generic.traps.count:splitBy("trapoid")
+                  visualization:
+                    seriesType: COLUMN
+              stacked: true
+              yAxes: []
+            visualizationType: GRAPH_CHART
+        conditions: []
+        displayName: Device Statistics
+        key: device_stats
+        numberOfVisibleCharts: 2
+    detailsSettings:
+      layout:
+        autoGenerate: false
+        cards:
+          - conditions: []
+            key: device_stats
+            type: CHART_GROUP
+          - conditions: []
+            key: default
+            type: LOGS
+            width: FULL_SIZE
+      staticContent:
+        breadcrumbs:
+          - displayName: SNMP Traps Device instances
+            entityType: snmptraps:com_dynatrace_ext_snmp-traps
+            type: ENTITY_LIST_REF
+        showAddTag: true
+        showGlobalFilter: false
+        showProblems: true
+        showProperties: true
+        showTags: true
+    entitiesListCards: []
+    entityType: snmptraps:com_dynatrace_ext_snmp-traps
+    logsCards:
+    - displayName: Traps details
+      enablePaging: true
+      filterQuery: dt.source_entity inEntitySelector "$(entityConditions)"
+      key: default
+      pageSize: 10
+      showFiltering: true

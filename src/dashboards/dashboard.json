@@ -1,0 +1,362 @@
+{
+  "metadata": {
+    "configurationVersions": [
+      6
+    ],
+    "clusterVersion": "1.254.0.20221012-201831"
+  },
+  "id": "3e7d9d19-540b-4903-bb1d-84a91ce8a5d1",
+  "dashboardMetadata": {
+    "name": "SNMP traps",
+    "shared": false,
+    "owner": "Dynatrace"
+  },
+  "tiles": [
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 684,
+        "left": 0,
+        "width": 1140,
+        "height": 38
+      },
+      "tileFilter": {},
+      "markdown": "Go to [list of all monitored devices\n](/ui/entity/list/snmptraps:com_dynatrace_ext_snmp-traps)"
+    },
+    {
+      "name": "Events per device",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 380,
+        "left": 0,
+        "width": 1140,
+        "height": 304
+      },
+      "tileFilter": {},
+      "customName": "Table",
+      "queries": [
+        {
+          "id": "A",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [
+            "dt.entity.snmptraps:com_dynatrace_ext_snmp-traps"
+          ],
+          "metricSelector": "com.dynatrace.extension.snmp-traps-generic.traps.count:splitBy(\"dt.entity.snmptraps:com_dynatrace_ext_snmp-traps\"):sum:auto:sort(value(sum,descending)):limit(10)",
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "TABLE",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "properties": {
+              "color": "DEFAULT"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "visible": true
+          },
+          "yAxes": []
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "Traps",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "isThresholdBackgroundAppliedToCell": false
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(com.dynatrace.extension.snmp-traps-generic.traps.count:splitBy(\"dt.entity.snmptraps:com_dynatrace_ext_snmp-traps\"):sum:auto:sort(value(sum,descending)):limit(10)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Recent traps",
+      "nameSize": "",
+      "tileType": "LOG_QUERY",
+      "configured": true,
+      "bounds": {
+        "top": 760,
+        "left": 0,
+        "width": 1140,
+        "height": 418
+      },
+      "tileFilter": {},
+      "query": "log.source=\"snmptraps\"",
+      "sort": "desc",
+      "columnHeaders": [
+        "timestamp",
+        "status",
+        "content",
+        "device.address"
+      ]
+    },
+    {
+      "name": "Markdown",
+      "tileType": "MARKDOWN",
+      "configured": true,
+      "bounds": {
+        "top": 1178,
+        "left": 0,
+        "width": 1140,
+        "height": 76
+      },
+      "tileFilter": {},
+      "markdown": "Go to [Log viewer](/ui/log-monitoring?gtf=-2h&gf=all&query=log.source%3D\"snmptraps\"&sortDirection=desc&visibleColumns=timestamp&visibleColumns=status&visibleColumns=content&advancedQueryMode=false) to see more details. You need to have Log Monitoring 2.0 enabled."
+    },
+    {
+      "name": "Trap count",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 0,
+        "left": 380,
+        "width": 760,
+        "height": 342
+      },
+      "tileFilter": {},
+      "customName": "Top list",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "com.dynatrace.extension.snmp-traps-generic.traps.count",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "filterBy": {
+            "nestedFilters": [],
+            "criteria": []
+          },
+          "limit": 100,
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "STACKED_COLUMN",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "ORANGE",
+              "seriesType": "STACKED_COLUMN",
+              "alias": "Traps count"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "isThresholdBackgroundAppliedToCell": false
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=null&(com.dynatrace.extension.snmp-traps-generic.traps.count:splitBy():sort(value(auto,descending)):limit(100)):limit(100):names"
+      ]
+    },
+    {
+      "name": "Trap count",
+      "tileType": "DATA_EXPLORER",
+      "configured": true,
+      "bounds": {
+        "top": 0,
+        "left": 0,
+        "width": 342,
+        "height": 342
+      },
+      "tileFilter": {},
+      "customName": "Top list",
+      "queries": [
+        {
+          "id": "A",
+          "metric": "com.dynatrace.extension.snmp-traps-generic.traps.count",
+          "timeAggregation": "DEFAULT",
+          "splitBy": [],
+          "sortBy": "DESC",
+          "filterBy": {
+            "nestedFilters": [],
+            "criteria": []
+          },
+          "limit": 100,
+          "enabled": true
+        }
+      ],
+      "visualConfig": {
+        "type": "SINGLE_VALUE",
+        "global": {
+          "hideLegend": false
+        },
+        "rules": [
+          {
+            "matcher": "A:",
+            "unitTransform": "auto",
+            "valueFormat": "auto",
+            "properties": {
+              "color": "ORANGE",
+              "seriesType": "STACKED_COLUMN",
+              "alias": "Traps count"
+            },
+            "seriesOverrides": []
+          }
+        ],
+        "axes": {
+          "xAxis": {
+            "displayName": "",
+            "visible": true
+          },
+          "yAxes": [
+            {
+              "displayName": "",
+              "visible": true,
+              "min": "AUTO",
+              "max": "AUTO",
+              "position": "LEFT",
+              "queryIds": [
+                "A"
+              ],
+              "defaultAxis": true
+            }
+          ]
+        },
+        "heatmapSettings": {
+          "yAxis": "VALUE"
+        },
+        "singleValueSettings": {
+          "showTrend": true,
+          "showSparkLine": false,
+          "linkTileColorToThreshold": false
+        },
+        "thresholds": [
+          {
+            "axisTarget": "LEFT",
+            "columnId": "Traps count",
+            "rules": [
+              {
+                "color": "#7dc540"
+              },
+              {
+                "color": "#f5d30f"
+              },
+              {
+                "color": "#dc172a"
+              }
+            ],
+            "queryId": "A",
+            "visible": true
+          }
+        ],
+        "tableSettings": {
+          "isThresholdBackgroundAppliedToCell": false
+        },
+        "graphChartSettings": {
+          "connectNulls": false
+        },
+        "honeycombSettings": {
+          "showHive": true,
+          "showLegend": true,
+          "showLabels": false
+        }
+      },
+      "queriesSettings": {
+        "resolution": ""
+      },
+      "metricExpressions": [
+        "resolution=Inf&(com.dynatrace.extension.snmp-traps-generic.traps.count:splitBy():sort(value(auto,descending)):limit(100)):limit(100):names",
+        "resolution=null&(com.dynatrace.extension.snmp-traps-generic.traps.count:splitBy():sort(value(auto,descending)):limit(100))"
+      ]
+    }
+  ]
+}
