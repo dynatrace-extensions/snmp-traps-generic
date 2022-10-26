@@ -90,10 +90,6 @@ let
       dtcli
       dtClusterSchema
 
-      # datasources
-      # temporary disabled, until we figure out how to share it properly
-      #snmpDatasource
-
       # extension-specific
       net-snmp
     ];

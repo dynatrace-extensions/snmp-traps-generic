@@ -1,14 +1,10 @@
-# <Traps Generic>
+# Traps Generic
 SNMP traps can be used to gain more details about the health state of your network devices. By adding event-based data to all the metrics reported by a dedicated SNMP extensions, you are able to diagnose the performance and availability issues even better.
 
 **Use Cases**
 
--Track number of traps reported by their types, so that you can enable alerting for issues such as port flapping
--Review individual events reported by the SNMP devices, so that you have more details explaining metric anomalies
-
-
-## Usage
-For now go for [dev](#dev)
+- Track number of traps reported by their types, so that you can enable alerting for issues such as port flapping
+- Review individual events reported by the SNMP devices, so that you have more details explaining metric anomalies
 
 ## Dev
 
