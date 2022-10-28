@@ -1,5 +1,5 @@
 name: com.dynatrace.extension.snmp-traps-generic
-version: <1.2.2>
+version: 1.2.2
 # Set proper version before the release:
 minDynatraceVersion: "1.254"
 minEECVersion: "1.251"
