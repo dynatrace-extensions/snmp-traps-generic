@@ -1,7 +1,7 @@
 name: com.dynatrace.extension.snmp-traps-generic
-version: 1.2.2
+version: 1.2.3
 # Set proper version before the release:
-minDynatraceVersion: "1.254"
+minDynatraceVersion: "1.256"
 minEECVersion: "1.251"
 author:
   name: Dynatrace
@@ -97,6 +97,8 @@ screens:
       layout:
         autoGenerate: false
         cards:
+          - conditions: []
+            type: INJECTIONS
           - conditions: []
             key: device_stats
             type: CHART_GROUP
